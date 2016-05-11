@@ -159,7 +159,18 @@ public class Map implements ActionListener{
      if the new piece is J*Man, store it in field jMan.
      Precondition: typ is one of the piece constants in class Piece.*/
     public void putNew(int typ, int x, int y){
-        
+        if(grid[x][y] == null) {
+        	if(typ == Piece.JMAN) {
+        		jMan = new JMan(x, y, Piece.rand(0, 3), this);
+        		grid[x][y] = jMan;
+        	} else if(typ == Piece.BLOCK) {
+        		grid[x][y] = new Block(x, y, this);
+        	} else if(typ == Piece.WALKER) {
+        		grid[x][y] = new Walker(x, y, this);
+        	} else {
+        		grid[x][y] = new Pillar(x, y, this);
+        	}
+        }
     }
     
     /** = "(x, y) is inside the grid". */
@@ -183,7 +194,7 @@ public class Map implements ActionListener{
     /** Move the Piece at (fromX, fromY) to (toX, toY) on the grid,
         changing the position at (fromX, fromY) to null;
         change the position in the Piece accordingly.
-        The piece originall in (toX, toY) is permanently deleted.
+        The piece original in (toX, toY) is permanently deleted.
      Precondition:
      1. (toX, toY) is inside the grid.
      2. The move is allowed by the game. */
